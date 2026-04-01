@@ -1,11 +1,12 @@
 import { DollarSign, Wallet, CreditCard } from "lucide-react";
 import { FrostCard, StatPill } from "./ui";
+import { BalanceTrendChart } from "./BalanceTrendChart";
+import { SpendingBreakdown } from "./SpendingBreakdown";
 import { useApp } from "../context/AppContext";
 
 export function Overview() {
   const { transactions } = useApp();
 
-  // Calculate totals from transactions
   const totalIncome = transactions
     .filter((t) => t.type === "income")
     .reduce((sum, t) => sum + t.amount, 0);
@@ -16,7 +17,6 @@ export function Overview() {
 
   const balance = totalIncome - totalExpense;
 
-  // Format currency
   const formatMoney = (amount) =>
     new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -25,7 +25,6 @@ export function Overview() {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Intro */}
       <div>
         <h2 className="text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
           Financial Summary
@@ -35,7 +34,6 @@ export function Overview() {
         </p>
       </div>
 
-      {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <FrostCard delay={0.1} className="flex flex-col justify-between">
           <div className="flex justify-between items-start">
@@ -89,15 +87,11 @@ export function Overview() {
         </FrostCard>
       </div>
 
-      {/* Placeholder for charts we will build in the next commit */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <FrostCard delay={0.4} className="lg:col-span-2 min-h-[350px] flex items-center justify-center">
-          <p className="text-slate-400 font-medium">Balance Trend Chart</p>
-        </FrostCard>
-        <FrostCard delay={0.5} className="min-h-[350px] flex items-center justify-center">
-          <p className="text-slate-400 font-medium">Category Breakdown Chart</p>
-        </FrostCard>
+        <BalanceTrendChart />
+        <SpendingBreakdown />
       </div>
     </div>
   );
 }
+
