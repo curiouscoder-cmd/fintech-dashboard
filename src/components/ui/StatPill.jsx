@@ -1,10 +1,6 @@
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { cn } from "../../lib/utils";
 
-/**
- * StatPill - Trend indicator showing percentage change
- * Green for positive, Red for negative trends.
- */
 export function StatPill({ value, positive }) {
   return (
     <div

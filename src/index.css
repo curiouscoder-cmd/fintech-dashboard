@@ -19,7 +19,6 @@
 }
 
 @layer components {
-  /* Frost Mesh Background */
   .mesh-bg {
     background-color: #f8fafc;
     position: fixed;
@@ -61,7 +60,6 @@
     animation: float 10s infinite ease-in-out 4s;
   }
 
-  /* Dark mode mesh background */
   .dark .mesh-bg {
     background-color: #0f172a;
   }
@@ -83,7 +81,6 @@
 }
 
 @layer utilities {
-  /* Hide scrollbar */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;

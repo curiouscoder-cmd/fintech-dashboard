@@ -1,10 +1,6 @@
 import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
 
-/**
- * NavItem - Floating sidebar navigation button
- * Shows active state with filled background and animated dot indicator.
- */
 export function NavItem({ icon: Icon, label, active, onClick }) {
   return (
     <button

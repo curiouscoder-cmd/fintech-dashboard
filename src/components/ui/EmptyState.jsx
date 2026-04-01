@@ -1,9 +1,5 @@
 import { cn } from "../../lib/utils";
 
-/**
- * EmptyState - Graceful empty/no-data state display
- * Shows an icon, message, and optional action button.
- */
 export function EmptyState({ icon: Icon, title, description, action, onAction }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-6 text-center">
