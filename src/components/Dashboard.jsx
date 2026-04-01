@@ -4,6 +4,7 @@ import { Header } from "./Header";
 import { Overview } from "./Overview";
 import { Transactions } from "./Transactions";
 import { Insights } from "./Insights";
+import { MobileNav } from "./MobileNav";
 import { useApp } from "../context/AppContext";
 
 export function Dashboard() {
@@ -32,13 +33,15 @@ export function Dashboard() {
         <main className="flex-1 flex flex-col gap-6 relative min-w-0">
           <Header />
 
-          <div className="flex-1 overflow-y-auto rounded-[32px] pr-2 pb-2 scrollbar-hide">
+          <div className="flex-1 overflow-y-auto rounded-[32px] pr-2 pb-20 md:pb-2 scrollbar-hide">
             {activeTab === 0 && <Overview />}
             {activeTab === 1 && <Transactions />}
             {activeTab === 2 && <Insights />}
           </div>
         </main>
       </div>
+
+      <MobileNav />
     </div>
   );
 }

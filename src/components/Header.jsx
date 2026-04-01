@@ -15,7 +15,7 @@ export function Header() {
         <h1 className="text-xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
           Dashboard
         </h1>
-        <div className="hidden lg:flex items-center gap-2 rounded-full bg-white/50 px-3 py-1.5 text-sm text-slate-500 border border-white/50 shadow-inner dark:bg-slate-800/50 dark:border-white/10 dark:text-slate-400">
+        <div className="flex items-center gap-2 rounded-full bg-white/50 px-3 py-1.5 text-sm text-slate-500 border border-white/50 shadow-inner dark:bg-slate-800/50 dark:border-white/10 dark:text-slate-400">
           <Shield className="h-4 w-4 text-indigo-500" />
           <span className="font-medium pr-2">Role:</span>
           <select
