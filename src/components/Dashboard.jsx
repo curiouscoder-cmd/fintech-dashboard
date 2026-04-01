@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
 import { Overview } from "./Overview";
+import { Transactions } from "./Transactions";
 import { useApp } from "../context/AppContext";
 
 export function Dashboard() {
@@ -32,11 +33,7 @@ export function Dashboard() {
 
           <div className="flex-1 overflow-y-auto rounded-[32px] pr-2 pb-2 scrollbar-hide">
             {activeTab === 0 && <Overview />}
-            {activeTab === 1 && (
-              <div className="flex items-center justify-center h-full">
-                <h2 className="text-2xl font-bold opacity-50">Transactions Coming Soon</h2>
-              </div>
-            )}
+            {activeTab === 1 && <Transactions />}
             {activeTab === 2 && (
               <div className="flex items-center justify-center h-full">
                 <h2 className="text-2xl font-bold opacity-50">Insights Coming Soon</h2>
