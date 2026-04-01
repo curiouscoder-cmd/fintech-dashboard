@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
+import { Overview } from "./Overview";
 import { useApp } from "../context/AppContext";
 
 export function Dashboard() {
   const { activeTab, darkMode } = useApp();
 
-  // Handle dark mode class flipping on HTML root
   useEffect(() => {
     const root = window.document.documentElement;
     if (darkMode) {
@@ -18,7 +18,6 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen font-sans text-slate-800 transition-colors duration-500 selection:bg-indigo-100 selection:text-indigo-900 dark:bg-slate-950 dark:text-slate-100 dark:selection:bg-indigo-900">
-      {/* Mesh Background */}
       <div className="mesh-bg">
         <div className="blob blob-1" />
         <div className="blob blob-2" />
@@ -31,13 +30,8 @@ export function Dashboard() {
         <main className="flex-1 flex flex-col gap-6 relative min-w-0">
           <Header />
 
-          {/* Tab Content Area */}
           <div className="flex-1 overflow-y-auto rounded-[32px] pr-2 pb-2 scrollbar-hide">
-            {activeTab === 0 && (
-              <div className="flex items-center justify-center h-full">
-                <h2 className="text-2xl font-bold opacity-50">Overview Coming Soon</h2>
-              </div>
-            )}
+            {activeTab === 0 && <Overview />}
             {activeTab === 1 && (
               <div className="flex items-center justify-center h-full">
                 <h2 className="text-2xl font-bold opacity-50">Transactions Coming Soon</h2>
