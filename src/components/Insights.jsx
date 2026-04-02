@@ -12,9 +12,11 @@ import { TrendingUp, TrendingDown, AlertCircle, Zap } from "lucide-react";
 import { FrostCard } from "./ui";
 import { useApp } from "../context/AppContext";
 import { monthlyData, categoryColors } from "../data/mockData";
+import { useChartTheme } from "../hooks/useChartTheme";
 
 export function Insights() {
   const { transactions } = useApp();
+  const theme = useChartTheme();
 
   const expenses = transactions.filter((t) => t.type === "expense");
   const incomes = transactions.filter((t) => t.type === "income");
@@ -33,7 +35,7 @@ export function Insights() {
 
   const totalIncome = incomes.reduce((sum, t) => sum + t.amount, 0);
   const totalExpense = expenses.reduce((sum, t) => sum + t.amount, 0);
-  const savingsRate = ((totalIncome - totalExpense) / totalIncome) * 100;
+  const savingsRate = totalIncome > 0 ? ((totalIncome - totalExpense) / totalIncome) * 100 : 0;
 
   const avgTransaction =
     expenses.length > 0 ? totalExpense / expenses.length : 0;
@@ -121,18 +123,18 @@ export function Insights() {
             <BarChart data={monthlyData} barGap={8}>
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="#e2e8f0"
+                stroke={theme.gridColor}
                 vertical={false}
               />
               <XAxis
                 dataKey="month"
-                stroke="#94a3b8"
+                stroke={theme.axisColor}
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
               />
               <YAxis
-                stroke="#94a3b8"
+                stroke={theme.axisColor}
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
@@ -140,16 +142,21 @@ export function Insights() {
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "rgba(255,255,255,0.9)",
-                  border: "none",
+                  backgroundColor: theme.tooltipBg,
+                  border: theme.tooltipBorder,
                   borderRadius: "16px",
-                  boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
+                  boxShadow: theme.tooltipShadow,
                 }}
                 formatter={(value) => [`$${value.toLocaleString()}`, ""]}
+                labelStyle={{ fontWeight: "bold", color: theme.tooltipLabelColor }}
+                itemStyle={{ color: theme.tooltipTextColor }}
               />
               <Legend
                 iconType="circle"
                 wrapperStyle={{ fontSize: "12px", paddingTop: "12px" }}
+                formatter={(value) => (
+                  <span className="text-slate-600 dark:text-slate-300">{value}</span>
+                )}
               />
               <Bar
                 dataKey="income"
@@ -175,7 +182,7 @@ export function Insights() {
           Spending by Category
         </h3>
         <div className="space-y-3">
-          {sortedCategories.map(([category, amount], i) => {
+          {sortedCategories.map(([category, amount]) => {
             const percent = (amount / totalExpense) * 100;
             return (
               <div key={category}>

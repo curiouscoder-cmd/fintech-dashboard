@@ -9,8 +9,11 @@ import {
 } from "recharts";
 import { FrostCard } from "./ui";
 import { balanceTrend } from "../data/mockData";
+import { useChartTheme } from "../hooks/useChartTheme";
 
 export function BalanceTrendChart() {
+  const theme = useChartTheme();
+
   return (
     <FrostCard delay={0.4} className="lg:col-span-2 min-h-[350px]">
       <div className="flex items-center justify-between mb-6">
@@ -26,25 +29,25 @@ export function BalanceTrendChart() {
           <AreaChart data={balanceTrend}>
             <defs>
               <linearGradient id="balanceGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#6366f1" stopOpacity={0.25} />
+                <stop offset="5%" stopColor="#6366f1" stopOpacity={theme.isDark ? 0.35 : 0.25} />
                 <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke="#e2e8f0"
+              stroke={theme.gridColor}
               vertical={false}
             />
             <XAxis
               dataKey="date"
-              stroke="#94a3b8"
+              stroke={theme.axisColor}
               fontSize={12}
               tickLine={false}
               axisLine={false}
               dy={10}
             />
             <YAxis
-              stroke="#94a3b8"
+              stroke={theme.axisColor}
               fontSize={12}
               tickLine={false}
               axisLine={false}
@@ -52,17 +55,18 @@ export function BalanceTrendChart() {
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: "rgba(255,255,255,0.9)",
-                border: "none",
+                backgroundColor: theme.tooltipBg,
+                border: theme.tooltipBorder,
                 borderRadius: "16px",
-                boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
+                boxShadow: theme.tooltipShadow,
                 backdropFilter: "blur(8px)",
               }}
               formatter={(value) => [
                 `$${value.toLocaleString()}`,
                 "Balance",
               ]}
-              labelStyle={{ fontWeight: "bold", color: "#334155" }}
+              labelStyle={{ fontWeight: "bold", color: theme.tooltipLabelColor }}
+              itemStyle={{ color: theme.tooltipTextColor }}
             />
             <Area
               type="monotone"
@@ -72,7 +76,7 @@ export function BalanceTrendChart() {
               fillOpacity={1}
               fill="url(#balanceGrad)"
               dot={false}
-              activeDot={{ r: 6, fill: "#6366f1", stroke: "#fff", strokeWidth: 2 }}
+              activeDot={{ r: 6, fill: "#6366f1", stroke: theme.isDark ? "#1e293b" : "#fff", strokeWidth: 2 }}
             />
           </AreaChart>
         </ResponsiveContainer>

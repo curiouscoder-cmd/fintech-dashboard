@@ -2,9 +2,11 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { FrostCard } from "./ui";
 import { useApp } from "../context/AppContext";
 import { categoryColors } from "../data/mockData";
+import { useChartTheme } from "../hooks/useChartTheme";
 
 export function SpendingBreakdown() {
   const { transactions } = useApp();
+  const theme = useChartTheme();
 
   const expenseByCategory = transactions
     .filter((t) => t.type === "expense")
@@ -52,12 +54,13 @@ export function SpendingBreakdown() {
               </Pie>
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "rgba(255,255,255,0.9)",
-                  border: "none",
+                  backgroundColor: theme.tooltipBg,
+                  border: theme.tooltipBorder,
                   borderRadius: "12px",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                  boxShadow: theme.tooltipShadow,
                 }}
                 formatter={(value) => [`$${value.toFixed(2)}`, ""]}
+                itemStyle={{ color: theme.tooltipTextColor }}
               />
             </PieChart>
           </ResponsiveContainer>
