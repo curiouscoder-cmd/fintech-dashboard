@@ -1,22 +1,38 @@
-import { createContext, useContext, useReducer, useCallback } from "react";
-import { transactions as initialTransactions } from "../data/mockData";
+import { createContext, useContext, useReducer, useCallback, useEffect } from "react";
+import { transactions as defaultTransactions } from "../data/mockData";
 
 const AppContext = createContext(null);
 
-const initialState = {
-  role: "admin",
-  transactions: initialTransactions,
-  filters: {
-    search: "",
-    category: "All",
-    type: "all",
-    sortBy: "date",
-    sortOrder: "desc",
-  },
-  activeTab: 0,
-  darkMode: false,
-  nextId: initialTransactions.length + 1,
-};
+const STORAGE_KEY = "finsight_data";
+
+function loadPersistedState() {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function buildInitialState() {
+  const persisted = loadPersistedState();
+
+  return {
+    role: persisted?.role || "admin",
+    transactions: persisted?.transactions || defaultTransactions,
+    filters: {
+      search: "",
+      category: "All",
+      type: "all",
+      sortBy: "date",
+      sortOrder: "desc",
+    },
+    activeTab: 0,
+    darkMode: persisted?.darkMode ?? false,
+    nextId: persisted?.nextId || defaultTransactions.length + 1,
+  };
+}
 
 function appReducer(state, action) {
   switch (action.type) {
@@ -38,7 +54,7 @@ function appReducer(state, action) {
     case "RESET_FILTERS":
       return {
         ...state,
-        filters: initialState.filters,
+        filters: buildInitialState().filters,
       };
 
     case "ADD_TRANSACTION":
@@ -71,7 +87,21 @@ function appReducer(state, action) {
 }
 
 export function AppProvider({ children }) {
-  const [state, dispatch] = useReducer(appReducer, initialState);
+  const [state, dispatch] = useReducer(appReducer, null, buildInitialState);
+
+  useEffect(() => {
+    try {
+      const toSave = {
+        transactions: state.transactions,
+        darkMode: state.darkMode,
+        role: state.role,
+        nextId: state.nextId,
+      };
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+    } catch {
+      // storage full or unavailable
+    }
+  }, [state.transactions, state.darkMode, state.role, state.nextId]);
 
   const setRole = useCallback((role) => dispatch({ type: "SET_ROLE", payload: role }), []);
   const setActiveTab = useCallback((tab) => dispatch({ type: "SET_ACTIVE_TAB", payload: tab }), []);
