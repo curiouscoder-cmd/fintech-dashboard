@@ -2,6 +2,7 @@ import { DollarSign, Wallet, CreditCard } from "lucide-react";
 import { FrostCard, StatPill } from "./ui";
 import { BalanceTrendChart } from "./BalanceTrendChart";
 import { SpendingBreakdown } from "./SpendingBreakdown";
+import { RecentTransactions } from "./RecentTransactions";
 import { useApp } from "../context/AppContext";
 
 export function Overview() {
@@ -91,7 +92,8 @@ export function Overview() {
         <BalanceTrendChart />
         <SpendingBreakdown />
       </div>
+
+      <RecentTransactions />
     </div>
   );
 }
-
