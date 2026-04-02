@@ -8,6 +8,8 @@ import {
   Plus,
   Pencil,
   Trash2,
+  Download,
+  FileJson,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FrostCard, EmptyState } from "./ui";
@@ -15,6 +17,7 @@ import { TransactionModal } from "./TransactionModal";
 import { useApp } from "../context/AppContext";
 import { categories, categoryColors } from "../data/mockData";
 import { cn } from "../lib/utils";
+import { exportToCSV, exportToJSON } from "../lib/export";
 
 export function Transactions() {
   const {
@@ -29,6 +32,7 @@ export function Transactions() {
   const [showFilters, setShowFilters] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
+  const [showExportMenu, setShowExportMenu] = useState(false);
 
   const filtered = transactions
     .filter((t) => {
@@ -78,9 +82,24 @@ export function Transactions() {
     );
   };
 
+  const highlightMatch = (text, query) => {
+    if (!query) return text;
+    const idx = text.toLowerCase().indexOf(query.toLowerCase());
+    if (idx === -1) return text;
+    return (
+      <>
+        {text.slice(0, idx)}
+        <mark className="bg-amber-200 dark:bg-amber-800/50 rounded px-0.5">
+          {text.slice(idx, idx + query.length)}
+        </mark>
+        {text.slice(idx + query.length)}
+      </>
+    );
+  };
+
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h2 className="text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
             Transactions
@@ -89,15 +108,51 @@ export function Transactions() {
             {filtered.length} of {transactions.length} transactions
           </p>
         </div>
-        {role === "admin" && (
-          <button
-            onClick={() => { setEditingTransaction(null); setModalOpen(true); }}
-            className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-indigo-500/20 hover:scale-105 transition-transform"
-          >
-            <Plus className="h-4 w-4" />
-            Add Transaction
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <button
+              onClick={() => setShowExportMenu(!showExportMenu)}
+              className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors dark:bg-slate-800 dark:border-white/10 dark:text-slate-300 dark:hover:bg-slate-700"
+            >
+              <Download className="h-4 w-4" />
+              Export
+            </button>
+            <AnimatePresence>
+              {showExportMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: 4, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 4, scale: 0.95 }}
+                  className="absolute right-0 top-full mt-2 w-40 rounded-xl border border-slate-200 bg-white shadow-xl z-30 overflow-hidden dark:bg-slate-800 dark:border-white/10"
+                >
+                  <button
+                    onClick={() => { exportToCSV(filtered); setShowExportMenu(false); }}
+                    className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-700"
+                  >
+                    <Download className="h-4 w-4" />
+                    CSV File
+                  </button>
+                  <button
+                    onClick={() => { exportToJSON(filtered); setShowExportMenu(false); }}
+                    className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-700"
+                  >
+                    <FileJson className="h-4 w-4" />
+                    JSON File
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+          {role === "admin" && (
+            <button
+              onClick={() => { setEditingTransaction(null); setModalOpen(true); }}
+              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-indigo-500/20 hover:scale-105 transition-transform"
+            >
+              <Plus className="h-4 w-4" />
+              Add Transaction
+            </button>
+          )}
+        </div>
       </div>
 
       <FrostCard delay={0.1} className="!p-4">
@@ -236,7 +291,7 @@ export function Transactions() {
                     </td>
                     <td className="py-3.5 px-4">
                       <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                        {t.description}
+                        {highlightMatch(t.description, filters.search)}
                       </span>
                     </td>
                     <td className="py-3.5 px-4">
