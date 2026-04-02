@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
 import { Overview } from "./Overview";
@@ -6,6 +7,30 @@ import { Transactions } from "./Transactions";
 import { Insights } from "./Insights";
 import { MobileNav } from "./MobileNav";
 import { useApp } from "../context/AppContext";
+
+const pageVariants = {
+  initial: { opacity: 0, y: 12 },
+  enter: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -8 },
+};
+
+const pageTransition = {
+  duration: 0.25,
+  ease: "easeInOut",
+};
+
+function TabContent({ activeTab }) {
+  switch (activeTab) {
+    case 0:
+      return <Overview />;
+    case 1:
+      return <Transactions />;
+    case 2:
+      return <Insights />;
+    default:
+      return <Overview />;
+  }
+}
 
 export function Dashboard() {
   const { activeTab, darkMode } = useApp();
@@ -34,9 +59,18 @@ export function Dashboard() {
           <Header />
 
           <div className="flex-1 overflow-y-auto rounded-[32px] pr-2 pb-20 md:pb-2 scrollbar-hide">
-            {activeTab === 0 && <Overview />}
-            {activeTab === 1 && <Transactions />}
-            {activeTab === 2 && <Insights />}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                variants={pageVariants}
+                initial="initial"
+                animate="enter"
+                exit="exit"
+                transition={pageTransition}
+              >
+                <TabContent activeTab={activeTab} />
+              </motion.div>
+            </AnimatePresence>
           </div>
         </main>
       </div>
