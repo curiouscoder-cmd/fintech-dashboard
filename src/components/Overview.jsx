@@ -1,5 +1,5 @@
 import { DollarSign, Wallet, CreditCard } from "lucide-react";
-import { FrostCard, StatPill } from "./ui";
+import { FrostCard, StatPill, AnimatedCurrency } from "./ui";
 import { BalanceTrendChart } from "./BalanceTrendChart";
 import { SpendingBreakdown } from "./SpendingBreakdown";
 import { RecentTransactions } from "./RecentTransactions";
@@ -17,12 +17,6 @@ export function Overview() {
     .reduce((sum, t) => sum + t.amount, 0);
 
   const balance = totalIncome - totalExpense;
-
-  const formatMoney = (amount) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(amount);
 
   return (
     <div className="flex flex-col gap-6">
@@ -48,7 +42,7 @@ export function Overview() {
               Total Balance
             </p>
             <h3 className="text-3xl font-bold text-slate-800 dark:text-slate-100">
-              {formatMoney(balance)}
+              <AnimatedCurrency value={balance} />
             </h3>
           </div>
         </FrostCard>
@@ -65,9 +59,9 @@ export function Overview() {
               Total Income
             </p>
             <h3 className="text-3xl font-bold text-slate-800 dark:text-slate-100">
-              {formatMoney(totalIncome)}
+              <AnimatedCurrency value={totalIncome} />
             </h3>
-          </div
+          </div>
         </FrostCard>
 
         <FrostCard delay={0.3} className="flex flex-col justify-between">
@@ -82,7 +76,7 @@ export function Overview() {
               Total Expenses
             </p>
             <h3 className="text-3xl font-bold text-slate-800 dark:text-slate-100">
-              {formatMoney(totalExpense)}
+              <AnimatedCurrency value={totalExpense} />
             </h3>
           </div>
         </FrostCard>
