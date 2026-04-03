@@ -48,6 +48,8 @@ export function Transactions() {
         !t.description.toLowerCase().includes(filters.search.toLowerCase())
       )
         return false;
+      if (filters.dateFrom && t.date < filters.dateFrom) return false;
+      if (filters.dateTo && t.date > filters.dateTo) return false;
       return true;
     })
     .sort((a, b) => {
@@ -244,6 +246,28 @@ export function Transactions() {
                       </option>
                     ))}
                   </select>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                    From
+                  </label>
+                  <input
+                    type="date"
+                    value={filters.dateFrom}
+                    onChange={(e) => setFilter("dateFrom", e.target.value)}
+                    className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm outline-none text-slate-700 dark:text-slate-200"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                    To
+                  </label>
+                  <input
+                    type="date"
+                    value={filters.dateTo}
+                    onChange={(e) => setFilter("dateTo", e.target.value)}
+                    className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-lg px-3 py-2 text-sm outline-none text-slate-700 dark:text-slate-200"
+                  />
                 </div>
                 <div className="flex items-end">
                   <button

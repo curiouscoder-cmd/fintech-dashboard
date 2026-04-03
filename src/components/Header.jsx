@@ -1,4 +1,4 @@
-import { Moon, Sun, Bell, Shield, ChevronDown } from "lucide-react";
+import { Moon, Sun, Bell, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 import { useApp } from "../context/AppContext";
 
@@ -9,13 +9,16 @@ export function Header() {
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="flex items-center justify-between rounded-[32px] border border-white/60 bg-white/40 px-6 py-4 backdrop-blur-xl shadow-sm dark:border-white/10 dark:bg-slate-900/40"
+      className="flex items-center justify-between rounded-[32px] border border-white/60 bg-white/40 px-4 sm:px-6 py-3 sm:py-4 backdrop-blur-xl shadow-sm dark:border-white/10 dark:bg-slate-900/40"
     >
-      <div className="flex items-center gap-4">
-        <h1 className="text-xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
+      <div className="flex items-center gap-2 sm:gap-4">
+        <div className="flex md:hidden h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-500 shadow-lg shadow-indigo-500/30 shrink-0">
+          <span className="text-lg">💎</span>
+        </div>
+        <h1 className="text-lg sm:text-xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
           Dashboard
         </h1>
-        <div className="flex items-center gap-2 rounded-full bg-white/50 px-3 py-1.5 text-sm text-slate-500 border border-white/50 shadow-inner dark:bg-slate-800/50 dark:border-white/10 dark:text-slate-400">
+        <div className="hidden sm:flex items-center gap-2 rounded-full bg-white/50 px-3 py-1.5 text-sm text-slate-500 border border-white/50 shadow-inner dark:bg-slate-800/50 dark:border-white/10 dark:text-slate-400">
           <Shield className="h-4 w-4 text-indigo-500" />
           <span className="font-medium pr-2">Role:</span>
           <select
@@ -33,24 +36,32 @@ export function Header() {
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4">
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          className="sm:hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-full px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 outline-none"
+        >
+          <option value="admin">Admin</option>
+          <option value="viewer">Viewer</option>
+        </select>
         <button
           onClick={toggleDarkMode}
-          className="relative rounded-full bg-white p-2.5 shadow-sm hover:scale-105 transition-transform dark:bg-slate-800 text-slate-600 dark:text-slate-300"
+          className="relative rounded-full bg-white p-2 sm:p-2.5 shadow-sm hover:scale-105 transition-transform dark:bg-slate-800 text-slate-600 dark:text-slate-300"
         >
-          {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          {darkMode ? <Sun className="h-4 w-4 sm:h-5 sm:w-5" /> : <Moon className="h-4 w-4 sm:h-5 sm:w-5" />}
         </button>
-        <button className="relative rounded-full bg-white p-2.5 shadow-sm hover:scale-105 transition-transform dark:bg-slate-800">
-          <Bell className="h-5 w-5 text-slate-600 dark:text-slate-300" />
-          <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-rose-500 border border-white dark:border-slate-800" />
+        <button className="relative rounded-full bg-white p-2 sm:p-2.5 shadow-sm hover:scale-105 transition-transform dark:bg-slate-800">
+          <Bell className="h-4 w-4 sm:h-5 sm:w-5 text-slate-600 dark:text-slate-300" />
+          <span className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 h-2 w-2 rounded-full bg-rose-500 border border-white dark:border-slate-800" />
         </button>
-        <div className="flex items-center gap-3 rounded-full bg-white pl-1 pr-4 py-1 shadow-sm border border-slate-100 cursor-pointer hover:shadow-md transition-shadow dark:bg-slate-800 dark:border-white/10">
+        <div className="hidden sm:flex items-center gap-3 rounded-full bg-white pl-1 pr-4 py-1 shadow-sm border border-slate-100 cursor-pointer hover:shadow-md transition-shadow dark:bg-slate-800 dark:border-white/10">
           <img
             src="https://api.dicebear.com/7.x/notionists/svg?seed=Felix&backgroundColor=e0e7ff"
             className="h-9 w-9 rounded-full border border-slate-200 dark:border-slate-700"
             alt="User avatar"
           />
-          <div className="hidden sm:block">
+          <div>
             <p className="text-sm font-bold leading-none dark:text-slate-200">Alex D.</p>
             <p className="text-xs text-slate-400 capitalize">{role}</p>
           </div>

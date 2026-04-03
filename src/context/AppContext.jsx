@@ -27,6 +27,8 @@ function buildInitialState() {
       type: "all",
       sortBy: "date",
       sortOrder: "desc",
+      dateFrom: "",
+      dateTo: "",
     },
     activeTab: 0,
     darkMode: persisted?.darkMode ?? false,
