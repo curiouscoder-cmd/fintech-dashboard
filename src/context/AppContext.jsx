@@ -83,6 +83,11 @@ function appReducer(state, action) {
         transactions: state.transactions.filter((t) => t.id !== action.payload),
       };
 
+    case "RESET_DATA": {
+      window.localStorage.removeItem(STORAGE_KEY);
+      return buildInitialState();
+    }
+
     default:
       return state;
   }
@@ -113,6 +118,7 @@ export function AppProvider({ children }) {
   const addTransaction = useCallback((t) => dispatch({ type: "ADD_TRANSACTION", payload: t }), []);
   const editTransaction = useCallback((t) => dispatch({ type: "EDIT_TRANSACTION", payload: t }), []);
   const deleteTransaction = useCallback((id) => dispatch({ type: "DELETE_TRANSACTION", payload: id }), []);
+  const resetData = useCallback(() => dispatch({ type: "RESET_DATA" }), []);
 
   const value = {
     ...state,
@@ -124,6 +130,7 @@ export function AppProvider({ children }) {
     addTransaction,
     editTransaction,
     deleteTransaction,
+    resetData,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { FrostCard } from "./ui";
 import { useApp } from "../context/AppContext";
-import { categoryColors } from "../data/mockData";
+import { categoryColors, categoryIcons } from "../data/mockData";
 import { cn } from "../lib/utils";
 
 export function RecentTransactions() {
@@ -61,8 +61,8 @@ export function RecentTransactions() {
                 color: categoryColors[t.category],
               }}
             >
-              <span className="text-sm font-bold">
-                {t.category.charAt(0)}
+              <span className="text-sm">
+                {categoryIcons[t.category] || t.category.charAt(0)}
               </span>
             </div>
             <div className="flex-1 min-w-0">
