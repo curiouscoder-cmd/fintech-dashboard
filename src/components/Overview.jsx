@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { DollarSign, Wallet, CreditCard } from "lucide-react";
 import { FrostCard, StatPill, AnimatedCurrency } from "./ui";
 import { BalanceTrendChart } from "./BalanceTrendChart";
@@ -8,15 +9,17 @@ import { useApp } from "../context/AppContext";
 export function Overview() {
   const { transactions } = useApp();
 
-  const totalIncome = transactions
-    .filter((t) => t.type === "income")
-    .reduce((sum, t) => sum + t.amount, 0);
+  const { totalIncome, totalExpense, balance } = useMemo(() => {
+    const income = transactions
+      .filter((t) => t.type === "income")
+      .reduce((sum, t) => sum + t.amount, 0);
 
-  const totalExpense = transactions
-    .filter((t) => t.type === "expense")
-    .reduce((sum, t) => sum + t.amount, 0);
+    const expense = transactions
+      .filter((t) => t.type === "expense")
+      .reduce((sum, t) => sum + t.amount, 0);
 
-  const balance = totalIncome - totalExpense;
+    return { totalIncome: income, totalExpense: expense, balance: income - expense };
+  }, [transactions]);
 
   return (
     <div className="flex flex-col gap-6">

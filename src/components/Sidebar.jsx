@@ -1,10 +1,22 @@
-import { Home, LineChart, ListTree, Lightbulb, Settings } from "lucide-react";
+import { Home, LineChart, ListTree, Settings } from "lucide-react";
 import { motion } from "framer-motion";
 import { NavItem } from "./ui/NavItem";
 import { useApp } from "../context/AppContext";
 
 export function Sidebar() {
-  const { activeTab, setActiveTab } = useApp();
+  const { activeTab, setActiveTab, transactions } = useApp();
+
+  const totalIncome = transactions
+    .filter((t) => t.type === "income")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const totalExpense = transactions
+    .filter((t) => t.type === "expense")
+    .reduce((sum, t) => sum + t.amount, 0);
+
+  const savingsPercent = totalIncome > 0
+    ? Math.round(((totalIncome - totalExpense) / totalIncome) * 100)
+    : 0;
 
   const navItems = [
     { icon: Home, label: "Overview", index: 0 },
@@ -34,12 +46,18 @@ export function Sidebar() {
         ))}
       </div>
 
-      <button
-        title="Settings"
-        className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-500 hover:rotate-90 transition-transform duration-500 shadow-sm dark:border-white/10 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700"
-      >
-        <Settings className="h-5 w-5" />
-      </button>
+      <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center text-center px-2">
+          <span className="text-lg font-bold text-indigo-500">{savingsPercent}%</span>
+          <span className="text-[9px] font-medium text-slate-400 leading-tight">saved</span>
+        </div>
+        <button
+          title="Settings"
+          className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-500 hover:rotate-90 transition-transform duration-500 shadow-sm dark:border-white/10 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700"
+        >
+          <Settings className="h-5 w-5" />
+        </button>
+      </div>
     </motion.aside>
   );
 }

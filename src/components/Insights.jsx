@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import { TrendingUp, TrendingDown, AlertCircle, Zap } from "lucide-react";
 import { FrostCard } from "./ui";
+import { HealthScore } from "./HealthScore";
 import { useApp } from "../context/AppContext";
 import { monthlyData, categoryColors } from "../data/mockData";
 import { useChartTheme } from "../hooks/useChartTheme";
@@ -111,7 +112,8 @@ export function Insights() {
         ))}
       </div>
 
-      <FrostCard delay={0.4} className="min-h-[380px]">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <FrostCard delay={0.4} className="lg:col-span-2 min-h-[380px]">
         <div className="mb-6">
           <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">
             Monthly Comparison
@@ -176,6 +178,8 @@ export function Insights() {
           </ResponsiveContainer>
         </div>
       </FrostCard>
+        <HealthScore transactions={transactions} />
+      </div>
 
       <FrostCard delay={0.5}>
         <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-4">

@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { FrostCard } from "./ui";
 import { useApp } from "../context/AppContext";
@@ -8,22 +9,24 @@ export function SpendingBreakdown() {
   const { transactions } = useApp();
   const theme = useChartTheme();
 
-  const expenseByCategory = transactions
-    .filter((t) => t.type === "expense")
-    .reduce((acc, t) => {
-      acc[t.category] = (acc[t.category] || 0) + t.amount;
-      return acc;
-    }, {});
+  const { chartData, total } = useMemo(() => {
+    const expenseByCategory = transactions
+      .filter((t) => t.type === "expense")
+      .reduce((acc, t) => {
+        acc[t.category] = (acc[t.category] || 0) + t.amount;
+        return acc;
+      }, {});
 
-  const chartData = Object.entries(expenseByCategory)
-    .map(([name, value]) => ({
-      name,
-      value: Math.round(value * 100) / 100,
-      color: categoryColors[name] || "#94a3b8",
-    }))
-    .sort((a, b) => b.value - a.value);
+    const data = Object.entries(expenseByCategory)
+      .map(([name, value]) => ({
+        name,
+        value: Math.round(value * 100) / 100,
+        color: categoryColors[name] || "#94a3b8",
+      }))
+      .sort((a, b) => b.value - a.value);
 
-  const total = chartData.reduce((sum, d) => sum + d.value, 0);
+    return { chartData: data, total: data.reduce((sum, d) => sum + d.value, 0) };
+  }, [transactions]);
 
   return (
     <FrostCard delay={0.5} className="min-h-[350px] flex flex-col">

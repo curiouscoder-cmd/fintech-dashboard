@@ -7,6 +7,7 @@ import { Transactions } from "./Transactions";
 import { Insights } from "./Insights";
 import { MobileNav } from "./MobileNav";
 import { useApp } from "../context/AppContext";
+import { useKeyboardShortcuts } from "../hooks/useKeyboardShortcuts";
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -34,6 +35,7 @@ function TabContent({ activeTab }) {
 
 export function Dashboard() {
   const { activeTab, darkMode } = useApp();
+  useKeyboardShortcuts();
 
   useEffect(() => {
     const root = window.document.documentElement;
