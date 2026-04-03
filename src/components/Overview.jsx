@@ -67,7 +67,7 @@ export function Overview() {
             <h3 className="text-3xl font-bold text-slate-800 dark:text-slate-100">
               {formatMoney(totalIncome)}
             </h3>
-          </div>
+          </div
         </FrostCard>
 
         <FrostCard delay={0.3} className="flex flex-col justify-between">

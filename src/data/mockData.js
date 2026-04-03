@@ -19,6 +19,26 @@ export const transactions = [
   { id: 18, date: "2025-03-12", description: "Dentist Visit", amount: 200.00, category: "Health", type: "expense" },
   { id: 19, date: "2025-03-11", description: "Bonus", amount: 2000, category: "Salary", type: "income" },
   { id: 20, date: "2025-03-10", description: "Grocery Run", amount: 62.30, category: "Groceries", type: "expense" },
+  { id: 21, date: "2025-03-09", description: "Movie Tickets", amount: 28.00, category: "Entertainment", type: "expense" },
+  { id: 22, date: "2025-03-08", description: "Lyft to Airport", amount: 38.50, category: "Transport", type: "expense" },
+  { id: 23, date: "2025-03-07", description: "Consulting Fee", amount: 1500, category: "Freelance", type: "income" },
+  { id: 24, date: "2025-03-06", description: "Target Run", amount: 94.20, category: "Shopping", type: "expense" },
+  { id: 25, date: "2025-03-05", description: "Chipotle", amount: 14.75, category: "Food & Dining", type: "expense" },
+  { id: 26, date: "2025-03-04", description: "Water Bill", amount: 42.00, category: "Utilities", type: "expense" },
+  { id: 27, date: "2025-03-03", description: "Trader Joe's", amount: 78.90, category: "Groceries", type: "expense" },
+  { id: 28, date: "2025-03-02", description: "Crypto Gains", amount: 420, category: "Investments", type: "income" },
+  { id: 29, date: "2025-03-01", description: "Yoga Studio", amount: 35.00, category: "Health", type: "expense" },
+  { id: 30, date: "2025-02-28", description: "Salary Deposit", amount: 5200, category: "Salary", type: "income" },
+  { id: 31, date: "2025-02-27", description: "Hulu Subscription", amount: 17.99, category: "Entertainment", type: "expense" },
+  { id: 32, date: "2025-02-25", description: "Parking Garage", amount: 22.00, category: "Transport", type: "expense" },
+  { id: 33, date: "2025-02-23", description: "Costco Bulk Buy", amount: 156.40, category: "Groceries", type: "expense" },
+  { id: 34, date: "2025-02-21", description: "Freelance Design Work", amount: 950, category: "Freelance", type: "income" },
+  { id: 35, date: "2025-02-19", description: "Nike Outlet", amount: 87.50, category: "Shopping", type: "expense" },
+  { id: 36, date: "2025-02-17", description: "Sushi Place", amount: 42.90, category: "Food & Dining", type: "expense" },
+  { id: 37, date: "2025-02-15", description: "Eye Doctor", amount: 175.00, category: "Health", type: "expense" },
+  { id: 38, date: "2025-02-13", description: "Gas Bill", amount: 68.00, category: "Utilities", type: "expense" },
+  { id: 39, date: "2025-02-11", description: "Bond Interest", amount: 280, category: "Investments", type: "income" },
+  { id: 40, date: "2025-02-09", description: "Brunch with Friends", amount: 34.50, category: "Food & Dining", type: "expense" },
 ];
 
 export const categories = [
@@ -47,13 +67,26 @@ export const categoryColors = {
   "Food & Dining": "#f97316",
 };
 
+export const categoryIcons = {
+  Salary: "💰",
+  Freelance: "💻",
+  Investments: "📈",
+  Groceries: "🛒",
+  Entertainment: "🎬",
+  Transport: "🚗",
+  Utilities: "⚡",
+  Shopping: "🛍️",
+  Health: "🏥",
+  "Food & Dining": "🍽️",
+};
+
 export const monthlyData = [
   { month: "Oct", income: 6200, expenses: 3100 },
   { month: "Nov", income: 5800, expenses: 3400 },
   { month: "Dec", income: 7100, expenses: 4200 },
   { month: "Jan", income: 6400, expenses: 2900 },
-  { month: "Feb", income: 5900, expenses: 3600 },
-  { month: "Mar", income: 9540, expenses: 3800 },
+  { month: "Feb", income: 6430, expenses: 3460 },
+  { month: "Mar", income: 11460, expenses: 4050 },
 ];
 
 export const balanceTrend = [
