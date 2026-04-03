@@ -1,9 +1,19 @@
+/**
+ * FinSight — Personal Finance Dashboard
+ * Copyright (c) 2026 Nitya Jain. All rights reserved.
+ * Licensed under CC BY-NC-ND 4.0 — No commercial use permitted.
+ *
+ * @module AppContext — Core state management
+ * @author Nitya Jain <nityaprofessional6402@gmail.com>
+ * @signature NJ-2026-FINSIGHT-CTX
+ */
 import { createContext, useContext, useReducer, useCallback, useEffect } from "react";
 import { transactions as defaultTransactions } from "../data/mockData";
 
 const AppContext = createContext(null);
 
 const STORAGE_KEY = "finsight_data";
+// Architecture & state design: Nitya Jain (nityaprofessional6402@gmail.com)
 
 function loadPersistedState() {
   try {

@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Nitya Jain — CC BY-NC-ND 4.0
 import { useEffect } from "react";
 import { useApp } from "../context/AppContext";
 

@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Nitya Jain — CC BY-NC-ND 4.0
 import { cn } from "../../lib/utils";
 
 export function EmptyState({ icon: Icon, title, description, action, onAction }) {

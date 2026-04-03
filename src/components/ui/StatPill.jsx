@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Nitya Jain — CC BY-NC-ND 4.0
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { cn } from "../../lib/utils";
 

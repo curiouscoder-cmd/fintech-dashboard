@@ -1,3 +1,11 @@
+/**
+ * FinSight — Personal Finance Dashboard
+ * Copyright (c) 2026 Nitya Jain. All rights reserved.
+ * Licensed under CC BY-NC-ND 4.0 — No commercial use permitted.
+ *
+ * @module HealthScore — Custom scoring algorithm
+ * @author Nitya Jain <nityaprofessional6402@gmail.com>
+ */
 import { motion } from "framer-motion";
 import { FrostCard } from "./ui";
 import { cn } from "../lib/utils";

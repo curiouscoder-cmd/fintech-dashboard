@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Nitya Jain — CC BY-NC-ND 4.0
 export { FrostCard } from "./FrostCard";
 export { StatPill } from "./StatPill";
 export { NavItem } from "./NavItem";
