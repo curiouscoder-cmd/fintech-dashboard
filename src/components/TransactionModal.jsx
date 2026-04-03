@@ -2,11 +2,13 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
 import { useApp } from "../context/AppContext";
+import { useToast } from "../context/ToastContext";
 import { categories } from "../data/mockData";
 import { cn } from "../lib/utils";
 
 export function TransactionModal({ onClose, editData = null }) {
   const { addTransaction, editTransaction } = useApp();
+  const toast = useToast();
   const isEdit = !!editData;
 
   const [form, setForm] = useState({
@@ -39,8 +41,10 @@ export function TransactionModal({ onClose, editData = null }) {
 
     if (isEdit) {
       editTransaction({ ...data, id: editData.id });
+      toast("Transaction updated successfully", "success");
     } else {
       addTransaction(data);
+      toast("Transaction added successfully", "success");
     }
     onClose();
   };

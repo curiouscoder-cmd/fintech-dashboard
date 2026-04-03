@@ -12,9 +12,10 @@ import {
   FileJson,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FrostCard, EmptyState } from "./ui";
+import { FrostCard, EmptyState, ConfirmDialog } from "./ui";
 import { TransactionModal } from "./TransactionModal";
 import { useApp } from "../context/AppContext";
+import { useToast } from "../context/ToastContext";
 import { categories, categoryColors } from "../data/mockData";
 import { cn } from "../lib/utils";
 import { exportToCSV, exportToJSON } from "../lib/export";
@@ -29,10 +30,13 @@ export function Transactions() {
     deleteTransaction,
   } = useApp();
 
+  const toast = useToast();
+
   const [showFilters, setShowFilters] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
   const [showExportMenu, setShowExportMenu] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   const filtered = transactions
     .filter((t) => {
@@ -70,6 +74,25 @@ export function Transactions() {
       setFilter("sortBy", field);
       setFilter("sortOrder", "desc");
     }
+  };
+
+  const handleDelete = () => {
+    if (!deleteTarget) return;
+    deleteTransaction(deleteTarget.id);
+    toast(`"${deleteTarget.description}" deleted`, "success");
+    setDeleteTarget(null);
+  };
+
+  const handleExportCSV = () => {
+    exportToCSV(filtered);
+    toast(`Exported ${filtered.length} transactions as CSV`, "success");
+    setShowExportMenu(false);
+  };
+
+  const handleExportJSON = () => {
+    exportToJSON(filtered);
+    toast(`Exported ${filtered.length} transactions as JSON`, "success");
+    setShowExportMenu(false);
   };
 
   const SortIcon = ({ field }) => {
@@ -126,14 +149,14 @@ export function Transactions() {
                   className="absolute right-0 top-full mt-2 w-40 rounded-xl border border-slate-200 bg-white shadow-xl z-30 overflow-hidden dark:bg-slate-800 dark:border-white/10"
                 >
                   <button
-                    onClick={() => { exportToCSV(filtered); setShowExportMenu(false); }}
+                    onClick={handleExportCSV}
                     className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-700"
                   >
                     <Download className="h-4 w-4" />
                     CSV File
                   </button>
                   <button
-                    onClick={() => { exportToJSON(filtered); setShowExportMenu(false); }}
+                    onClick={handleExportJSON}
                     className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-700"
                   >
                     <FileJson className="h-4 w-4" />
@@ -259,7 +282,7 @@ export function Transactions() {
                   <th className="text-left py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     Description
                   </th>
-                  <th className="text-left py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  <th className="text-left py-3 px-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider hidden sm:table-cell">
                     Category
                   </th>
                   <th
@@ -283,7 +306,7 @@ export function Transactions() {
                     key={t.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.03 }}
+                    transition={{ delay: i * 0.02 }}
                     className="border-b border-slate-100 dark:border-white/5 hover:bg-white/40 dark:hover:bg-white/5 transition-colors"
                   >
                     <td className="py-3.5 px-4 text-sm text-slate-500 dark:text-slate-400 whitespace-nowrap">
@@ -294,7 +317,7 @@ export function Transactions() {
                         {highlightMatch(t.description, filters.search)}
                       </span>
                     </td>
-                    <td className="py-3.5 px-4">
+                    <td className="py-3.5 px-4 hidden sm:table-cell">
                       <span
                         className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg"
                         style={{
@@ -332,7 +355,7 @@ export function Transactions() {
                             <Pencil className="h-3.5 w-3.5" />
                           </button>
                           <button
-                            onClick={() => deleteTransaction(t.id)}
+                            onClick={() => setDeleteTarget(t)}
                             className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-colors"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
@@ -353,6 +376,19 @@ export function Transactions() {
           <TransactionModal
             editData={editingTransaction}
             onClose={() => { setModalOpen(false); setEditingTransaction(null); }}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {deleteTarget && (
+          <ConfirmDialog
+            title="Delete Transaction"
+            message={`Are you sure you want to delete "${deleteTarget.description}"? This action cannot be undone.`}
+            confirmLabel="Delete"
+            danger
+            onConfirm={handleDelete}
+            onCancel={() => setDeleteTarget(null)}
           />
         )}
       </AnimatePresence>
