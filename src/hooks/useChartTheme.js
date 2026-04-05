@@ -1,4 +1,3 @@
-// Copyright (c) 2026 Nitya Jain — CC BY-NC-ND 4.0
 import { useApp } from "../context/AppContext";
 
 export function useChartTheme() {

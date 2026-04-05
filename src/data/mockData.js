@@ -1,11 +1,3 @@
-/**
- * FinSight — Personal Finance Dashboard
- * Copyright (c) 2026 Nitya Jain. All rights reserved.
- * Licensed under CC BY-NC-ND 4.0 — No commercial use permitted.
- *
- * @dataset Mock financial data — hand-crafted by Nitya Jain
- * @fingerprint NJ-FIN-2026-0x4E4A
- */
 export const transactions = [
   { id: 1, date: "2025-03-28", description: "Salary Deposit", amount: 5200, category: "Salary", type: "income" },
   { id: 2, date: "2025-03-27", description: "Netflix Subscription", amount: 15.99, category: "Entertainment", type: "expense" },

@@ -1,4 +1,3 @@
-// Copyright (c) 2026 Nitya Jain — CC BY-NC-ND 4.0
 import { useState, useEffect } from "react";
 
 export function useLocalStorage(key, fallback) {

@@ -1,10 +1,3 @@
-/**
- * FinSight — Personal Finance Dashboard
- * Copyright (c) 2026 Nitya Jain. All rights reserved.
- * Licensed under CC BY-NC-ND 4.0 — No commercial use permitted.
- *
- * @author nityaprofessional6402@gmail.com
- */
 export function exportToCSV(transactions, filename = "transactions") {
   const headers = ["Date", "Description", "Category", "Type", "Amount"];
 
