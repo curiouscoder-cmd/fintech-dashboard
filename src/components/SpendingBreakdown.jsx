@@ -1,8 +1,3 @@
-/**
- * FinSight — Personal Finance Dashboard
- * Copyright (c) 2026 Nitya Jain. All rights reserved.
- * Licensed under CC BY-NC-ND 4.0 — No commercial use permitted.
- */
 import { useMemo } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { FrostCard } from "./ui";
