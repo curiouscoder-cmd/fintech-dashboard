@@ -60,7 +60,7 @@ export function Dashboard() {
         <main className="flex-1 flex flex-col gap-6 relative min-w-0">
           <Header />
 
-          <div className="flex-1 overflow-y-auto rounded-[32px] pr-2 pb-20 md:pb-2 scrollbar-hide">
+          <div className="flex-1 overflow-y-auto pr-2 pb-20 md:pb-2 scrollbar-hide">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
