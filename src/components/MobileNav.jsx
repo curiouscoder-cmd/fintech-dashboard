@@ -18,6 +18,7 @@ export function MobileNav() {
           <button
             key={item.index}
             onClick={() => setActiveTab(item.index)}
+            aria-label={`Navigate to ${item.label}`}
             className={cn(
               "flex flex-col items-center gap-1 px-4 py-2 rounded-2xl transition-all",
               activeTab === item.index
